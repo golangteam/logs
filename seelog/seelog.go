@@ -1,12 +1,13 @@
 package seelog
 
 import (
-	"github.com/cihub/seelog"
-	"github.com/golangteam/function/file"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/cihub/seelog"
+	"github.com/golangteam/function/file"
 )
 
 const (
@@ -21,12 +22,25 @@ const (
 </seelog>`
 )
 
+//InitDefault init seelog
+//
+// @param pathLog    string  path of logs
+// @param pathConfig string  path of log.xml
+func InitDefault() {
+	Init("", "")
+}
+
+//Info log info
+func Info(v ...interface{}) {
+	seelog.Info(v...)
+}
+
 //Init init seelog
 //
 // @param pathLog    string  path of logs
 // @param pathConfig string  path of log.xml
 func Init(logPath, configPath string) {
-	
+
 	if logPath == "" {
 		logPath = "logs/roll.log"
 	}
@@ -34,9 +48,9 @@ func Init(logPath, configPath string) {
 	if file.FileIsNotExist(tmp) {
 		os.MkdirAll(tmp, 0764)
 	}
-	
+
 	if configPath == "" {
-		configPath =  "log.xml"
+		configPath = "log.xml"
 	}
 	tmp = filepath.Dir(configPath)
 	if file.FileIsNotExist(tmp) {
